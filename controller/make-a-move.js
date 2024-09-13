@@ -53,7 +53,22 @@ export async function makeMove(req, res) {
       })
       game.player = updatedPlayer
       const updatedGame = await game.save()
+      io.emit(`card-move-${game_id}`)
       io.emit(`pursuit-of-card-${game_id}`, updatedGame)
+      const requestedPlayer = updatedPlayer.find(
+         (p) => p.guest_id === req.guest_id
+      )
+      if (
+         requestedPlayer &&
+         requestedPlayer?.status &&
+         requestedPlayer.status === 'winner'
+      ) {
+         io.emit(`victory-${game_id}`)
+      }
+      const newWinners = updatedPlayer.filter((p) => p?.status === 'winner')
+      if (newWinners.length === 3) {
+         io.emit(`game-over-${game_id}`)
+      }
       return res.send(updatedGame)
    } catch (error) {
       console.log(error)

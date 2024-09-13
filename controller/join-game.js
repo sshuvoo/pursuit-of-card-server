@@ -32,6 +32,7 @@ export const joinGame = async (req, res) => {
          game.player.push(newPlayer)
          const updatedGame = await game.save()
          io.emit(`pursuit-of-card-${game_id}`, updatedGame)
+         io.emit(`join-player-${game_id}`, newPlayer.guest_name)
          return res.send({
             message: 'Player joined successfully',
             updatedGame
