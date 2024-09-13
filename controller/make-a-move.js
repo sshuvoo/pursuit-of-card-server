@@ -55,7 +55,7 @@ export async function makeMove(req, res) {
       const updatedGame = await game.save()
       io.emit(`card-move-${game_id}`)
       io.emit(`pursuit-of-card-${game_id}`, updatedGame)
-      const requestedPlayer = updatedPlayer.find(
+      const requestedPlayer = updatedGame.player.find(
          (p) => p.guest_id === req.guest_id
       )
       if (
@@ -63,7 +63,10 @@ export async function makeMove(req, res) {
          requestedPlayer?.status &&
          requestedPlayer.status === 'winner'
       ) {
-         io.emit(`victory-${game_id}`)
+         io.emit(`victory-${game_id}`, {
+            player_name: requestedPlayer.guest_name,
+            rank: requestedPlayer.rank
+         })
       }
       const newWinners = updatedPlayer.filter((p) => p?.status === 'winner')
       if (newWinners.length === 3) {
