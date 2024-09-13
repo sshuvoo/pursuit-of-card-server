@@ -3,7 +3,6 @@ import { Game } from '../model/game-model.js'
 export const getGame = async (req, res) => {
    const game_id = req.params.game_id
    const guest_id = req.guest_id
-   console.log(game_id, guest_id)
    if (!game_id) return res.status(400).send('Game ID is required')
 
    try {

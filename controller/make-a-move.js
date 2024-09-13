@@ -74,7 +74,6 @@ export async function makeMove(req, res) {
       }
       return res.send(updatedGame)
    } catch (error) {
-      console.log(error)
       return res.status(500).send({ message: 'Internal server error' })
    }
 }

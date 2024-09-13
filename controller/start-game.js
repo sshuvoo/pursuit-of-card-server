@@ -53,7 +53,6 @@ export const startGame = async (req, res) => {
          return res.status(400).send({ message: 'Please add five players' })
       }
    } catch (error) {
-      console.log(error)
       return res.status(500).send({ message: 'Internal server error' })
    }
 }

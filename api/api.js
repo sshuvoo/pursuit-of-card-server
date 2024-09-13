@@ -8,10 +8,12 @@ import { joinGame } from '../controller/join-game.js'
 import { makeMove } from '../controller/make-a-move.js'
 import { resetGame } from '../controller/restart-game.js'
 import { startGame } from '../controller/start-game.js'
+import { sendMessage } from '../controller/send-message.js'
 
 export const api = Router()
 
 api.post('/create-game', [authenticate, createGame])
+api.post('/send-message', [authenticate, sendMessage])
 api.post('/guest-login', guestLogin)
 
 api.put('/join-game', [authenticate, joinGame])

@@ -16,7 +16,6 @@ export const resetGame = async (req, res, next) => {
       const updatedGame = await game.save()
       if (updatedGame) next()
    } catch (error) {
-      console.log(error)
       return res.status(500).send({ message: 'Internal server error' })
    }
 }
