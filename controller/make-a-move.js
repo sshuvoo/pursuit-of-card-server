@@ -18,6 +18,11 @@ export async function makeMove(req, res) {
       if (!game) {
          return res.status(404).send('Game not found')
       }
+      const requestPlayer = game.player.find((p) => p.guest_id === req.guest_id)
+
+      if (requestPlayer.cards.length < 5 || requestPlayer.cards.length > 5) {
+         return res.status(404).send('Move not allowed')
+      }
       let isPassed = false
       const winners = game.player
          .filter((p) => p?.status === 'winner')
